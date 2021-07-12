@@ -35,11 +35,13 @@
 		public BinaryTree(BinaryTreeNode<T> root)
 		{
 			Root = root;
+			Count = PreOrderTraversal().Count;
 		}
 
 		public BinaryTree(T value)
 		{
 			Root = new BinaryTreeNode<T>(value);
+			Count = 1;
 		}
 
 		/// <summary>

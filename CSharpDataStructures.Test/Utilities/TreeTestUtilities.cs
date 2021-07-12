@@ -3,7 +3,7 @@
 	public static class TreeTestUtilities
 	{
 		/// <summary>
-		/// Creates a complete tree with three levels shown below.
+		/// Gets the root of a complete tree with three levels shown below.
 		/// 
 		///      4
 		///    /   \ 
@@ -11,8 +11,8 @@
 		///  / \     \
 		/// 1   3     7
 		/// </summary>
-		/// <returns>A complete binary tree with three levels.</returns>
-		public static BinaryTree<int> GetCompleteBinaryTreeWithMultipleLevels()
+		/// <returns>The root of a complete binary tree with three levels.</returns>
+		public static BinaryTreeNode<int> GetRootOfCompleteBinaryTree()
 		{
 			var root = new BinaryTreeNode<int>(4);
 
@@ -34,11 +34,11 @@
 			root.Left = leftSubtreeRoot;
 			root.Right = rightSubtreeRoot;
 
-			return new BinaryTree<int>(root);
+			return root;
 		}
 
 		/// <summary>
-		/// Creates a full tree with three levels shown below.
+		/// Gets the root of a full tree with three levels shown below.
 		/// 
 		///      4
 		///    /   \ 
@@ -46,8 +46,8 @@
 		///  / \   / \
 		/// 1   3 5   7
 		/// </summary>
-		/// <returns>A full binary tree with three levels.</returns>
-		public static BinaryTree<int> GetFullBinaryTreeWithMultipleLevels()
+		/// <returns>The root of a full binary tree with three levels.</returns>
+		public static BinaryTreeNode<int> GetRootOfFullBinaryTree()
 		{
 			var root = new BinaryTreeNode<int>(4);
 
@@ -71,7 +71,7 @@
 			root.Left = leftSubtreeRoot;
 			root.Right = rightSubtreeRoot;
 
-			return new BinaryTree<int>(root);
+			return root;
 		}
 	}
 }

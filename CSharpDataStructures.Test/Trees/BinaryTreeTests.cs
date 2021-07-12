@@ -61,7 +61,8 @@
 		public void IsComplete_CompleteTreeWithMultipleLevels_ReturnTrue()
 		{
 			// Arrange
-			var tree = TreeTestUtilities.GetCompleteBinaryTreeWithMultipleLevels();
+			var root = TreeTestUtilities.GetRootOfCompleteBinaryTree();
+			var tree = new BinaryTree<int>(root);
 
 			// Act
 			bool isComplete = tree.IsComplete();
@@ -102,7 +103,8 @@
 		public void IsFull_CompleteTreeWithMultipleLevels_ReturnFalse()
 		{
 			// Arrange
-			var tree = TreeTestUtilities.GetCompleteBinaryTreeWithMultipleLevels();
+			var root = TreeTestUtilities.GetRootOfCompleteBinaryTree();
+			var tree = new BinaryTree<int>(root);
 
 			// Act
 			bool isFull = tree.IsFull();
@@ -115,7 +117,8 @@
 		public void IsFull_FullTreeWithMultipleLevels_ReturnTrue()
 		{
 			// Arrange
-			var tree = TreeTestUtilities.GetFullBinaryTreeWithMultipleLevels();
+			var root = TreeTestUtilities.GetRootOfFullBinaryTree();
+			var tree = new BinaryTree<int>(root);
 
 			// Act
 			bool isFull = tree.IsFull();
@@ -175,7 +178,8 @@
 		public void Clear_CompleteTreeWithMultipleLevels_RootIsNullAndCountIsZero()
 		{
 			// Arrange
-			var tree = TreeTestUtilities.GetCompleteBinaryTreeWithMultipleLevels();
+			var root = TreeTestUtilities.GetRootOfCompleteBinaryTree();
+			var tree = new BinaryTree<int>(root);
 
 			// Act
 			tree.Clear();
@@ -204,7 +208,8 @@
 		public void PreOrderTraversal_FullTreeWithMultipleLevels_ReturnEqualCollection()
 		{
 			// Arrange
-			var tree = TreeTestUtilities.GetFullBinaryTreeWithMultipleLevels();
+			var root = TreeTestUtilities.GetRootOfFullBinaryTree();
+			var tree = new BinaryTree<int>(root);
 			var expectedTraversal = new List<int>() { 4, 2, 1, 3, 6, 5, 7 };
 
 			// Act
@@ -233,7 +238,8 @@
 		public void InOrderTraversal_FullTreeWithMultipleLevels_ReturnEqualCollection()
 		{
 			// Arrange
-			var tree = TreeTestUtilities.GetFullBinaryTreeWithMultipleLevels();
+			var root = TreeTestUtilities.GetRootOfFullBinaryTree();
+			var tree = new BinaryTree<int>(root);
 			var expectedTraversal = new List<int>() { 1, 2, 3, 4, 5, 6, 7 };
 
 			// Act
@@ -262,7 +268,8 @@
 		public void PostOrderTraversal_FullTreeWithMultipleLevels_ReturnEqualCollection()
 		{
 			// Arrange
-			var tree = TreeTestUtilities.GetFullBinaryTreeWithMultipleLevels();
+			var root = TreeTestUtilities.GetRootOfFullBinaryTree();
+			var tree = new BinaryTree<int>(root);
 			var expectedTraversal = new List<int>() { 1, 3, 2, 5, 7, 6, 4 };
 
 			// Act
