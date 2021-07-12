@@ -1,13 +1,12 @@
-﻿using System;
-
-namespace CSharpDataStructures
+﻿namespace CSharpDataStructures
 {
+	using System;
+
 	public sealed class BinaryTreeNode<T> where T : IComparable
 	{
 		public T Value { get; set; }
 		public BinaryTreeNode<T> Left { get; set; }
 		public BinaryTreeNode<T> Right { get; set; }
-		public BinaryTree<T> Tree { get; }
 
 		public BinaryTreeNode(T value)
 		{

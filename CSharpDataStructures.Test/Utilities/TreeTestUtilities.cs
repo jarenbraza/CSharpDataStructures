@@ -1,30 +1,7 @@
-﻿using NUnit.Framework;
-using System.Collections.Generic;
-
-namespace CSharpDataStructures.Test
+﻿namespace CSharpDataStructures.Test
 {
-	public static class BinaryTreeTestUtilities
+	public static class TreeTestUtilities
 	{
-		public static IEnumerable<TestCaseData> CompleteTreeTestSuite
-		{
-			get
-			{
-				yield return new TestCaseData(GetBinarySearchTreeIsCompleteWithMultipleLevels());
-				yield return new TestCaseData(GetBinarySearchTreeWithOneLevel());
-				yield return new TestCaseData(GetBinarySearchTreeIsEmpty());
-			}
-		}
-
-		public static IEnumerable<TestCaseData> FullTreeTestSuite
-		{
-			get
-			{
-				yield return new TestCaseData(GetBinarySearchTreeIsFullWithMultipleLevels());
-				yield return new TestCaseData(GetBinarySearchTreeWithOneLevel());
-				yield return new TestCaseData(GetBinarySearchTreeIsEmpty());
-			}
-		}
-
 		/// <summary>
 		/// Creates a complete tree with three levels shown below.
 		/// 
@@ -34,8 +11,8 @@ namespace CSharpDataStructures.Test
 		///  / \     \
 		/// 1   3     7
 		/// </summary>
-		/// <returns>A complete binary search tree with three levels.</returns>
-		public static BinarySearchTree<int> GetBinarySearchTreeIsCompleteWithMultipleLevels()
+		/// <returns>A complete binary tree with three levels.</returns>
+		public static BinaryTree<int> GetCompleteBinaryTreeWithMultipleLevels()
 		{
 			var root = new BinaryTreeNode<int>(4);
 
@@ -57,7 +34,7 @@ namespace CSharpDataStructures.Test
 			root.Left = leftSubtreeRoot;
 			root.Right = rightSubtreeRoot;
 
-			return new BinarySearchTree<int>(root);
+			return new BinaryTree<int>(root);
 		}
 
 		/// <summary>
@@ -69,8 +46,8 @@ namespace CSharpDataStructures.Test
 		///  / \   / \
 		/// 1   3 5   7
 		/// </summary>
-		/// <returns>A full binary search tree with three levels.</returns>
-		public static BinarySearchTree<int> GetBinarySearchTreeIsFullWithMultipleLevels()
+		/// <returns>A full binary tree with three levels.</returns>
+		public static BinaryTree<int> GetFullBinaryTreeWithMultipleLevels()
 		{
 			var root = new BinaryTreeNode<int>(4);
 
@@ -94,26 +71,7 @@ namespace CSharpDataStructures.Test
 			root.Left = leftSubtreeRoot;
 			root.Right = rightSubtreeRoot;
 
-			return new BinarySearchTree<int>(root);
-		}
-
-		/// <summary>
-		/// Creates a tree with one level (and therefore, one node).
-		/// </summary>
-		/// <returns>A binary search tree with one level.</returns>
-		public static BinarySearchTree<int> GetBinarySearchTreeWithOneLevel()
-		{
-			var root = new BinaryTreeNode<int>(420);  // 😎🤜 🤛😎
-			return new BinarySearchTree<int>(root);
-		}
-
-		/// <summary>
-		/// Creates an empty tree.
-		/// </summary>
-		/// <returns>An empty binary search tree.</returns>
-		public static BinarySearchTree<int> GetBinarySearchTreeIsEmpty()
-		{
-			return new BinarySearchTree<int>();
+			return new BinaryTree<int>(root);
 		}
 	}
 }

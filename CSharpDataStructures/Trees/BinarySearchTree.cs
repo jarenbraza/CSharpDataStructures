@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-
-namespace CSharpDataStructures
+﻿namespace CSharpDataStructures
 {
+	using System;
+	using System.Collections;
+	using System.Collections.Generic;
+
 	public class BinarySearchTree<T> : BinaryTree<T>, ICollection<T>, IEnumerable<T> where T : IComparable
 	{
 		public BinarySearchTree() : base()

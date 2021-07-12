@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace CSharpDataStructures
+﻿namespace CSharpDataStructures
 {
+	using System;
+	using System.Collections.Generic;
+
 	/// <summary>
 	/// Represents a collection of binary tree nodes.
 	/// </summary>
@@ -207,6 +207,78 @@ namespace CSharpDataStructures
 				traversal.Add(root.Value);
 				PreOrderTraversalHelper(root.Left, traversal);
 				PreOrderTraversalHelper(root.Right, traversal);
+			}
+		}
+
+		/// <summary>
+		/// Gets an <see cref="ICollection{T}"/> that represents the in-order traversal
+		/// of the <see cref="BinaryTree{T}"/>.
+		/// <para>
+		/// In-order traversal visits the left subtree, then the root, then the right subtree.
+		/// </para>
+		/// </summary>
+		/// <returns>A <see cref="ICollection{T}"/> that represents the in-order traversal
+		/// of the <see cref="BinaryTree{T}"/>.</returns>
+		public ICollection<T> InOrderTraversal()
+		{
+			ICollection<T> traversal = new List<T>();
+			InOrderTraversalHelper(Root, traversal);
+			return traversal;
+		}
+
+		/// <summary>
+		/// Recursively performs a in-order traversal of the tree at <paramref name="root"/>.
+		/// <para>
+		/// The values of the nodes are stored in <paramref name="traversal"/> ordered by
+		/// when the corresponding nodes were visited.
+		/// </para>
+		/// </summary>
+		/// <param name="root">The root of the current subtree.</param>
+		/// <param name="traversal">The collection of node values ordered by when the
+		/// corresponding nodes were visited.</param>
+		private void InOrderTraversalHelper(BinaryTreeNode<T> root, ICollection<T> traversal)
+		{
+			if (root != null)
+			{
+				InOrderTraversalHelper(root.Left, traversal);
+				traversal.Add(root.Value);
+				InOrderTraversalHelper(root.Right, traversal);
+			}
+		}
+
+		/// <summary>
+		/// Gets an <see cref="ICollection{T}"/> that represents the post-order traversal
+		/// of the <see cref="BinaryTree{T}"/>.
+		/// <para>
+		/// Post-order traversal visits the left subtree, then the root, then the right subtree.
+		/// </para>
+		/// </summary>
+		/// <returns>A <see cref="ICollection{T}"/> that represents the post-order traversal
+		/// of the <see cref="BinaryTree{T}"/>.</returns>
+		public ICollection<T> PostOrderTraversal()
+		{
+			ICollection<T> traversal = new List<T>();
+			PostOrderTraversalHelper(Root, traversal);
+			return traversal;
+		}
+
+		/// <summary>
+		/// Recursively performs a post-order traversal of the tree at <paramref name="root"/>.
+		/// <para>
+		/// The values of the nodes are stored in <paramref name="traversal"/> ordered by
+		/// when the corresponding nodes were visited.
+		/// </para>
+		/// </summary>
+		/// <param name="root">The root of the current subtree.</param>
+		/// <param name="traversal">The collection of node values ordered by when the
+		/// corresponding nodes were visited.</param>
+		private void PostOrderTraversalHelper(BinaryTreeNode<T> root, ICollection<T> traversal)
+		{
+			if (root != null)
+			{
+				PostOrderTraversalHelper(root.Left, traversal);
+				PostOrderTraversalHelper(root.Right, traversal);
+				traversal.Add(root.Value);
 			}
 		}
 	}
