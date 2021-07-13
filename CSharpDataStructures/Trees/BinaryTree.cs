@@ -359,7 +359,10 @@
 			}
 
 			// Process the next node in traversal.
-			currentNodeInTraversal = previousNodes.Pop();
+			if (previousNodes.Count > 0)
+			{
+				currentNodeInTraversal = previousNodes.Pop();
+			}
 		}
 	}
 }

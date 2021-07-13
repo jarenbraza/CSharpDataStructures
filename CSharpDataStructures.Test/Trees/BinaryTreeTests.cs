@@ -279,5 +279,41 @@
 			Assert.IsTrue(traversal.SequenceEqual(expectedTraversal));
 		}
 		#endregion
+
+		#region GetEnumerator tests
+		[Test]
+		public void GetEnumerator_EmptyTree_ReturnEmptyCollection()
+		{
+			// Arrange
+			var tree = new BinaryTree<int>();
+
+			// Act
+			bool hasAdvancedToNextElement = tree.GetEnumerator().MoveNext();
+
+			// Assert
+			Assert.IsFalse(hasAdvancedToNextElement);
+		}
+
+		[Test]
+		public void GetEnumerator_PerfectTreeWithMultipleLevels_ReturnEqualCollection()
+		{
+			// Arrange
+			var root = TreeTestUtilities.GetRootOfPerfectBinaryTree();
+			var tree = new BinaryTree<int>(root);
+			var expectedTraversal = new List<int>() { 1, 2, 3, 4, 5, 6, 7 };
+			var actualTraversal = new List<int>();
+
+			// Act
+			var enumerator = tree.GetEnumerator();
+
+			while (enumerator.MoveNext())
+			{
+				actualTraversal.Add(enumerator.Current);
+			}
+
+			// Assert
+			Assert.IsTrue(actualTraversal.SequenceEqual(expectedTraversal));
+		}
+		#endregion
 	}
 }
