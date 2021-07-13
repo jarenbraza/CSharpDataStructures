@@ -1,13 +1,14 @@
 ﻿namespace CSharpDataStructures
 {
 	using System;
+	using System.Collections;
 	using System.Collections.Generic;
 
 	/// <summary>
 	/// Represents a collection of binary tree nodes.
 	/// </summary>
 	/// <typeparam name="T">The type of the values in the binary tree.</typeparam>
-	public class BinaryTree<T> where T : IComparable
+	public class BinaryTree<T> : IEnumerable<T> where T : IComparable
 	{
 		/// <summary>
 		/// Gets the number of elements contained in the <see cref="BinaryTree{T}"/>.
@@ -25,6 +26,7 @@
 		/// </returns>
 		public bool IsReadOnly { get; } = false;
 
+		/// <summary>The root of the <see cref="BinaryTree{T}"/>.</summary>
 		public BinaryTreeNode<T> Root { get; set; }
 
 		public BinaryTree()
@@ -120,15 +122,15 @@
 		}
 
 		/// <summary>
-		/// Gets whether the <see cref="BinaryTree{T}"/> is full.
+		/// Gets whether the <see cref="BinaryTree{T}"/> is perfect.
 		/// <para>
 		/// This is done through level-order traversal.
-		/// If all levels are filled, then the tree is full.
-		/// Otherwise, the tree is not full.
+		/// If all levels are filled, then the tree is perfect.
+		/// Otherwise, the tree is not perfect.
 		/// </para>
 		/// </summary>
-		/// <returns>True if the <see cref="BinaryTree{T}"/> is full; otherwise, false.</returns>
-		public bool IsFull()
+		/// <returns>True if the <see cref="BinaryTree{T}"/> is perfect; otherwise, false.</returns>
+		public bool IsPerfect()
 		{
 			if (Root == null)
 			{
@@ -147,7 +149,7 @@
 			{
 				int nodeCount = nodesInLevel.Count;
 
-				// If any level is not filled, then the tree is not full.
+				// If any level is not filled, then the tree is not perfect.
 				if (nodeCount != expectedNodeCount)
 				{
 					return false;
@@ -172,7 +174,7 @@
 				}
 			}
 
-			// All levels are filled, so the tree is full.
+			// All levels are filled, so the tree is perfect.
 			return true;
 		}
 
@@ -282,6 +284,82 @@
 				PostOrderTraversalHelper(root.Right, traversal);
 				traversal.Add(root.Value);
 			}
+		}
+
+		public IEnumerator<T> GetEnumerator()
+		{
+			return new BinaryTreeEnumerator<T>(Root);
+		}
+
+		IEnumerator IEnumerable.GetEnumerator()
+		{
+			return new BinaryTreeEnumerator<T>(Root);
+		}
+	}
+
+	public class BinaryTreeEnumerator<T> : IEnumerator<T> where T : IComparable
+	{
+		/// <summary>The root of the tree.</summary>
+		private readonly BinaryTreeNode<T> root;
+
+		/// <summary>Utility stack to allow for iterative in-order traversal.</summary>
+		private readonly Stack<BinaryTreeNode<T>> previousNodes;
+
+		/// <summary>The current node of the in-order traversal.</summary>
+		private BinaryTreeNode<T> currentNodeInTraversal;
+
+		public T Current { get { return currentNodeInTraversal.Value; } }
+
+		object IEnumerator.Current { get { return Current; } }
+
+		public BinaryTreeEnumerator(BinaryTreeNode<T> root)
+		{
+			this.root = root;
+			previousNodes = new Stack<BinaryTreeNode<T>>();
+			currentNodeInTraversal = new BinaryTreeNode<T>(default);
+			currentNodeInTraversal.Right = root;
+		}
+
+		public void Dispose()
+		{
+			Dispose();
+		}
+
+		public bool MoveNext()
+		{
+			GetNextNodeInOrder();
+			return currentNodeInTraversal != null;
+		}
+
+		public void Reset()
+		{
+			currentNodeInTraversal = root;
+		}
+
+		/// <summary>
+		/// Traverses to the next node in respect to an in-order traversal of the tree.
+		/// </summary>
+		private void GetNextNodeInOrder()
+		{
+			if (currentNodeInTraversal == null && previousNodes.Count == 0)
+			{
+				return;
+			}
+
+			// Visit the right subtree - done preemptively, due to how the enumerator was initially positioned.
+			// It is at the start because enumerators are initially positioned before the first
+			// element until the first MoveNext() call.
+			currentNodeInTraversal = currentNodeInTraversal.Right;
+
+			// Visit the left subtree, saving all nodes traversed for later processing.
+			while (currentNodeInTraversal != null)
+			{
+				previousNodes.Push(currentNodeInTraversal);
+				currentNodeInTraversal = currentNodeInTraversal.Left;
+			}
+
+			// Process the next node in traversal.
+			currentNodeInTraversal = previousNodes.Pop();
 		}
 	}
 }

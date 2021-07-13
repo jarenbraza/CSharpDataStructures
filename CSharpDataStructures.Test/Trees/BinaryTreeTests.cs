@@ -72,63 +72,63 @@
 		}
 		#endregion
 
-		#region IsFull tests
+		#region IsPerfect tests
 		[Test]
-		public void IsFull_EmptyTree_ReturnTrue()
+		public void IsPerfect_EmptyTree_ReturnTrue()
 		{
 			// Arrange
 			var tree = new BinaryTree<int>();
 
 			// Act
-			bool isFull = tree.IsFull();
+			bool isPerfect = tree.IsPerfect();
 
 			// Assert
-			Assert.IsTrue(isFull);
+			Assert.IsTrue(isPerfect);
 		}
 
 		[Test]
-		public void IsFull_TreeWithOneLevel_ReturnTrue()
+		public void IsPerfect_TreeWithOneLevel_ReturnTrue()
 		{
 			// Arrange
 			var tree = new BinaryTree<int>(1);
 
 			// Act
-			bool isFull = tree.IsFull();
+			bool isPerfect = tree.IsPerfect();
 
 			// Assert
-			Assert.IsTrue(isFull);
+			Assert.IsTrue(isPerfect);
 		}
 
 		[Test]
-		public void IsFull_CompleteTreeWithMultipleLevels_ReturnFalse()
+		public void IsPerfect_CompleteTreeWithMultipleLevels_ReturnFalse()
 		{
 			// Arrange
 			var root = TreeTestUtilities.GetRootOfCompleteBinaryTree();
 			var tree = new BinaryTree<int>(root);
 
 			// Act
-			bool isFull = tree.IsFull();
+			bool isPerfect = tree.IsPerfect();
 
 			// Assert
-			Assert.IsFalse(isFull);
+			Assert.IsFalse(isPerfect);
 		}
 
 		[Test]
-		public void IsFull_FullTreeWithMultipleLevels_ReturnTrue()
+		public void IsPerfect_PerfectTreeWithMultipleLevels_ReturnTrue()
 		{
 			// Arrange
-			var root = TreeTestUtilities.GetRootOfFullBinaryTree();
+			var root = TreeTestUtilities.GetRootOfPerfectBinaryTree();
 			var tree = new BinaryTree<int>(root);
 
 			// Act
-			bool isFull = tree.IsFull();
+			bool isPerfect = tree.IsPerfect();
 
 			// Assert
-			Assert.IsTrue(isFull);
+			Assert.IsTrue(isPerfect);
 		}
 
 		[Test]
-		public void IsFull_TreeWithOneUnfilledLevel_ReturnFalse()
+		public void IsPerfect_TreeWithOneUnfilledLevel_ReturnFalse()
 		{
 			// Arrange
 			var root = new BinaryTreeNode<int>(3);
@@ -138,10 +138,10 @@
 			var tree = new BinarySearchTree<int>(root);
 
 			// Act
-			bool isFull = tree.IsFull();
+			bool isPerfect = tree.IsPerfect();
 
 			// Assert
-			Assert.IsFalse(isFull);
+			Assert.IsFalse(isPerfect);
 		}
 		#endregion
 
@@ -205,10 +205,10 @@
 		}
 
 		[Test]
-		public void PreOrderTraversal_FullTreeWithMultipleLevels_ReturnEqualCollection()
+		public void PreOrderTraversal_PerfectTreeWithMultipleLevels_ReturnEqualCollection()
 		{
 			// Arrange
-			var root = TreeTestUtilities.GetRootOfFullBinaryTree();
+			var root = TreeTestUtilities.GetRootOfPerfectBinaryTree();
 			var tree = new BinaryTree<int>(root);
 			var expectedTraversal = new List<int>() { 4, 2, 1, 3, 6, 5, 7 };
 
@@ -235,10 +235,10 @@
 		}
 
 		[Test]
-		public void InOrderTraversal_FullTreeWithMultipleLevels_ReturnEqualCollection()
+		public void InOrderTraversal_PerfectTreeWithMultipleLevels_ReturnEqualCollection()
 		{
 			// Arrange
-			var root = TreeTestUtilities.GetRootOfFullBinaryTree();
+			var root = TreeTestUtilities.GetRootOfPerfectBinaryTree();
 			var tree = new BinaryTree<int>(root);
 			var expectedTraversal = new List<int>() { 1, 2, 3, 4, 5, 6, 7 };
 
@@ -265,10 +265,10 @@
 		}
 
 		[Test]
-		public void PostOrderTraversal_FullTreeWithMultipleLevels_ReturnEqualCollection()
+		public void PostOrderTraversal_PerfectTreeWithMultipleLevels_ReturnEqualCollection()
 		{
 			// Arrange
-			var root = TreeTestUtilities.GetRootOfFullBinaryTree();
+			var root = TreeTestUtilities.GetRootOfPerfectBinaryTree();
 			var tree = new BinaryTree<int>(root);
 			var expectedTraversal = new List<int>() { 1, 3, 2, 5, 7, 6, 4 };
 

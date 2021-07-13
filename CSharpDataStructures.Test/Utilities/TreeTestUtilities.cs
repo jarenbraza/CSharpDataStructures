@@ -38,7 +38,7 @@
 		}
 
 		/// <summary>
-		/// Gets the root of a full tree with three levels shown below.
+		/// Gets the root of a perfect tree with three levels shown below.
 		/// 
 		///      4
 		///    /   \ 
@@ -46,8 +46,8 @@
 		///  / \   / \
 		/// 1   3 5   7
 		/// </summary>
-		/// <returns>The root of a full binary tree with three levels.</returns>
-		public static BinaryTreeNode<int> GetRootOfFullBinaryTree()
+		/// <returns>The root of a perfect binary tree with three levels.</returns>
+		public static BinaryTreeNode<int> GetRootOfPerfectBinaryTree()
 		{
 			var root = new BinaryTreeNode<int>(4);
 

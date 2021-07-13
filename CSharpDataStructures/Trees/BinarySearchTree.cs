@@ -6,14 +6,25 @@
 
 	public class BinarySearchTree<T> : BinaryTree<T>, ICollection<T>, IEnumerable<T> where T : IComparable
 	{
+		/// <summary>
+		/// Initializes a new instance of the <see cref="BinarySearchTree{T}"/> class that is empty.
+		/// </summary>
 		public BinarySearchTree() : base()
 		{
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="BinarySearchTree{T}"/> class that is
+		/// rooted at <paramref name="root"/>.
+		/// </summary>
 		public BinarySearchTree(BinaryTreeNode<T> root) : base(root)
 		{
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="BinarySearchTree{T}"/> class that is
+		/// rooted at a <see cref="BinaryTreeNode{T}"/> with the specified <paramref name="item"/>.
+		/// </summary>
 		public BinarySearchTree(T item) : base(item)
 		{
 		}
@@ -45,19 +56,29 @@
 			return ContainsHelper(item, Root);
 		}
 
+		/// <summary>
+		/// Copies the elements of the <see cref="BinarySearchTree{T}"/> to an <see cref="Array"/>,
+		/// starting at a particular System.Array index.
+		/// </summary>
+		/// <param name="array">
+		/// The one-dimensional <see cref="Array"/> that is the destination of the elements copied
+		/// from <see cref="BinarySearchTree{T}"/>. The <see cref="Array"/> must have zero-based
+		/// indexing.
+		/// </param>
+		/// <param name="arrayIndex">The zero-based index in array at which copying begins.</param>
 		public void CopyTo(T[] array, int arrayIndex)
 		{
-			throw new NotImplementedException();
-		}
+			if (array == null)
+			{
+				throw new ArgumentNullException(nameof(array));
+			}
 
-		public IEnumerator<T> GetEnumerator()
-		{
-			throw new NotImplementedException();
-		}
+			if (array.Rank != 1)
+			{
+				throw new ArgumentException("Only single dimensional arrays are supported.");
+			}
 
-		IEnumerator IEnumerable.GetEnumerator()
-		{
-			throw new NotImplementedException();
+			CopyTo(array, arrayIndex);
 		}
 
 		/// <summary>
@@ -136,6 +157,17 @@
 			return root;
 		}
 
+		/// <summary>
+		/// Gets the <see cref="BinaryTreeNode{T}"/> with the minimum value in the tree rooted
+		/// at <paramref name="root"/>.
+		/// <para>
+		/// By condition, smaller <see cref="BinaryTreeNode{T}"/> will be located in the left
+		/// subtree. So, that is searched as far as possible.
+		/// </para>
+		/// </summary>
+		/// <param name="root">The root of the tree to get the minimum
+		/// <see cref="BinaryTreeNode{T}"/> value.</param>
+		/// <returns>The <see cref="BinaryTreeNode{T}"/> with the minimum value in the tree.</returns>
 		private BinaryTreeNode<T> GetMinimum(BinaryTreeNode<T> root)
 		{
 			while (root.Left != null)
