@@ -181,9 +181,9 @@
 		/// <summary>
 		/// Gets an <see cref="ICollection{T}"/> that represents the pre-order traversal
 		/// of the <see cref="BinaryTree{T}"/>.
-		/// <para>
+		/// <remarks>
 		/// Pre-order traversal visits the root, then the left subtree, then the right subtree.
-		/// </para>
+		/// </remarks>
 		/// </summary>
 		/// <returns>A <see cref="ICollection{T}"/> that represents the pre-order traversal
 		/// of the <see cref="BinaryTree{T}"/>.</returns>
@@ -196,10 +196,10 @@
 
 		/// <summary>
 		/// Recursively performs a pre-order traversal of the tree at <paramref name="root"/>.
-		/// <para>
+		/// <remarks>
 		/// The values of the nodes are stored in <paramref name="traversal"/> ordered by
 		/// when the corresponding nodes were visited.
-		/// </para>
+		/// </remarks>
 		/// </summary>
 		/// <param name="root">The root of the current subtree.</param>
 		/// <param name="traversal">The collection of node values ordered by when the
@@ -217,9 +217,9 @@
 		/// <summary>
 		/// Gets an <see cref="ICollection{T}"/> that represents the in-order traversal
 		/// of the <see cref="BinaryTree{T}"/>.
-		/// <para>
+		/// <remarks>
 		/// In-order traversal visits the left subtree, then the root, then the right subtree.
-		/// </para>
+		/// </remarks>
 		/// </summary>
 		/// <returns>A <see cref="ICollection{T}"/> that represents the in-order traversal
 		/// of the <see cref="BinaryTree{T}"/>.</returns>
@@ -232,10 +232,10 @@
 
 		/// <summary>
 		/// Recursively performs a in-order traversal of the tree at <paramref name="root"/>.
-		/// <para>
+		/// <remarks>
 		/// The values of the nodes are stored in <paramref name="traversal"/> ordered by
 		/// when the corresponding nodes were visited.
-		/// </para>
+		/// </remarks>
 		/// </summary>
 		/// <param name="root">The root of the current subtree.</param>
 		/// <param name="traversal">The collection of node values ordered by when the
@@ -253,9 +253,9 @@
 		/// <summary>
 		/// Gets an <see cref="ICollection{T}"/> that represents the post-order traversal
 		/// of the <see cref="BinaryTree{T}"/>.
-		/// <para>
+		/// <remarks>
 		/// Post-order traversal visits the left subtree, then the root, then the right subtree.
-		/// </para>
+		/// </remarks>
 		/// </summary>
 		/// <returns>A <see cref="ICollection{T}"/> that represents the post-order traversal
 		/// of the <see cref="BinaryTree{T}"/>.</returns>
@@ -268,10 +268,10 @@
 
 		/// <summary>
 		/// Recursively performs a post-order traversal of the tree at <paramref name="root"/>.
-		/// <para>
+		/// <remarks>
 		/// The values of the nodes are stored in <paramref name="traversal"/> ordered by
 		/// when the corresponding nodes were visited.
-		/// </para>
+		/// </remarks>
 		/// </summary>
 		/// <param name="root">The root of the current subtree.</param>
 		/// <param name="traversal">The collection of node values ordered by when the
@@ -286,83 +286,47 @@
 			}
 		}
 
+		/// <summary>
+		/// Gets an <see cref="IEnumerator{T}"/> that iterates through the <see cref="BinaryTree{T}"/>.
+		/// </summary>
+		/// <remarks>
+		/// This is done through iterative in-order traversal.
+		/// </remarks>
+		/// <returns>
+		/// An <see cref="IEnumerator{T}"/> that can be used to iterate through the <see cref="BinaryTree{T}"/>.
+		/// </returns>
 		public IEnumerator<T> GetEnumerator()
 		{
-			return new BinaryTreeEnumerator<T>(Root);
-		}
+			Stack<BinaryTreeNode<T>> previousNodes = new Stack<BinaryTreeNode<T>>();
+			var current = Root;
 
-		IEnumerator IEnumerable.GetEnumerator()
-		{
-			return new BinaryTreeEnumerator<T>(Root);
-		}
-	}
+			while (current != null || previousNodes.Count > 0)
+            {
+				// Dive as deep as possible into the left subtree
+				while (current != null)
+                {
+					previousNodes.Push(current);
+					current = current.Left;
+                }
 
-	public class BinaryTreeEnumerator<T> : IEnumerator<T> where T : IComparable
-	{
-		/// <summary>The root of the tree.</summary>
-		private readonly BinaryTreeNode<T> root;
+				// Visit current (which is the last node seen during the dive into the left subtree).
+				current = previousNodes.Pop();
+				yield return current.Value;
 
-		/// <summary>Utility stack to allow for iterative in-order traversal.</summary>
-		private readonly Stack<BinaryTreeNode<T>> previousNodes;
-
-		/// <summary>The current node of the in-order traversal.</summary>
-		private BinaryTreeNode<T> currentNodeInTraversal;
-
-		public T Current { get { return currentNodeInTraversal.Value; } }
-
-		object IEnumerator.Current { get { return Current; } }
-
-		public BinaryTreeEnumerator(BinaryTreeNode<T> root)
-		{
-			this.root = root;
-			previousNodes = new Stack<BinaryTreeNode<T>>();
-			currentNodeInTraversal = new BinaryTreeNode<T>(default);
-			currentNodeInTraversal.Right = root;
-		}
-
-		public void Dispose()
-		{
-			Dispose();
-		}
-
-		public bool MoveNext()
-		{
-			GetNextNodeInOrder();
-			return currentNodeInTraversal != null;
-		}
-
-		public void Reset()
-		{
-			currentNodeInTraversal = root;
+				// Visit right subtree
+				current = current.Right;
+            }
 		}
 
 		/// <summary>
-		/// Traverses to the next node in respect to an in-order traversal of the tree.
+		/// Gets an <see cref="IEnumerator"/> that iterates through the <see cref="BinaryTree{T}"/>.
 		/// </summary>
-		private void GetNextNodeInOrder()
+		/// <returns>
+		/// An <see cref="IEnumerator"/> that can be used to iterate through the <see cref="BinaryTree{T}"/>.
+		/// </returns>
+		IEnumerator IEnumerable.GetEnumerator()
 		{
-			if (currentNodeInTraversal == null && previousNodes.Count == 0)
-			{
-				return;
-			}
-
-			// Visit the right subtree - done preemptively, due to how the enumerator was initially positioned.
-			// It is at the start because enumerators are initially positioned before the first
-			// element until the first MoveNext() call.
-			currentNodeInTraversal = currentNodeInTraversal.Right;
-
-			// Visit the left subtree, saving all nodes traversed for later processing.
-			while (currentNodeInTraversal != null)
-			{
-				previousNodes.Push(currentNodeInTraversal);
-				currentNodeInTraversal = currentNodeInTraversal.Left;
-			}
-
-			// Process the next node in traversal.
-			if (previousNodes.Count > 0)
-			{
-				currentNodeInTraversal = previousNodes.Pop();
-			}
+			return GetEnumerator();
 		}
 	}
 }
