@@ -1,10 +1,9 @@
 ﻿namespace CSharpDataStructures
 {
-	using System;
-	using System.Collections;
-	using System.Collections.Generic;
+    using System;
+    using System.Collections.Generic;
 
-	public class BinarySearchTree<T> : BinaryTree<T>, ICollection<T>, IEnumerable<T> where T : IComparable
+    public class BinarySearchTree<T> : BinaryTree<T>, ICollection<T>, IEnumerable<T> where T : IComparable
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="BinarySearchTree{T}"/> class that is empty.
@@ -146,13 +145,31 @@
 					return root.Left;
 				}
 
-				// Two children:
-				// Replace the value of the root with the value of the minimum node in the sub-tree.
-				// Remove the minimum node in the sub-tree.
-				BinaryTreeNode<T> minNode = GetMinimum(root);
-				root.Value = minNode.Value;
-				root.Right = RemoveHelper(root.Value, root.Right, out hasRemovedValue);
-			}
+                // Two children:
+                // Replace the value of the root with the value of the minimum node in the sub-tree.
+                // Remove the minimum node in the sub-tree.
+                var parentOfSuccessor = root;
+
+                // Find successor
+                var successor = root.Right;
+
+                while (successor.Left != null)
+                {
+                    parentOfSuccessor = successor;
+                    successor = successor.Left;
+                }
+
+                if (parentOfSuccessor == root)
+                {
+                    parentOfSuccessor.Right = successor.Right;
+                }
+                else
+                {
+                    parentOfSuccessor.Left = successor.Right;
+                }
+
+                root.Value = successor.Value;
+            }
 
 			return root;
 		}

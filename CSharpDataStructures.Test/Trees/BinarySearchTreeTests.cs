@@ -2,11 +2,14 @@ namespace CSharpDataStructures.Test
 {
 	using CSharpDataStructures.Test.Constants;
 	using NUnit.Framework;
+    using System.Collections.Generic;
+    using System.Linq;
 
-	[TestFixture]
+    [TestFixture]
 	public class BinarySearchTreeTests
 	{
-		[Test]
+        #region Add tests
+        [Test]
 		public void Add_EmptyTree_HasNonNullRootAndCountOne()
 		{
 			// Arrange
@@ -64,18 +67,20 @@ namespace CSharpDataStructures.Test
 
 			Assert.AreEqual(tree.Count, 2);
 		}
-		
-		[Test]
+        #endregion
+
+        #region Contains
+        [Test]
 		public void Contains_EmptyTreeAndItemNotInTree_ReturnFalse()
 		{
 			// Arrange
 			var tree = new BinarySearchTree<int>();
 
 			// Act
-			bool contains = tree.Contains(TestConstants.Item);
+			bool containsItem = tree.Contains(TestConstants.Item);
 
 			// Assert
-			Assert.IsFalse(contains);
+			Assert.IsFalse(containsItem);
 		}
 
 		[Test]
@@ -85,10 +90,10 @@ namespace CSharpDataStructures.Test
 			var tree = new BinarySearchTree<int>(TestConstants.Item);
 
 			// Act
-			bool contains = tree.Contains(TestConstants.SmallerItem);
+			bool containsItem = tree.Contains(TestConstants.SmallerItem);
 
 			// Assert
-			Assert.IsFalse(contains);
+			Assert.IsFalse(containsItem);
 		}
 
 		[Test]
@@ -98,10 +103,10 @@ namespace CSharpDataStructures.Test
 			var tree = new BinarySearchTree<int>(TestConstants.Item);
 
 			// Act
-			bool contains = tree.Contains(TestConstants.LargerItem);
+			bool containsItem = tree.Contains(TestConstants.LargerItem);
 
 			// Assert
-			Assert.IsFalse(contains);
+			Assert.IsFalse(containsItem);
 		}
 
 		[Test]
@@ -111,10 +116,70 @@ namespace CSharpDataStructures.Test
 			var tree = new BinarySearchTree<int>(TreeTestUtilities.GetRootOfCompleteBinaryTree());
 
 			// Act
-			bool contains = tree.Contains(TestConstants.ItemInTreeOfGetRootOfCompleteBinaryTree);
+			bool containsItem = tree.Contains(TestConstants.ItemInTreeOfGetRootOfCompleteBinaryTree);
 
 			// Assert
-			Assert.IsTrue(contains);
+			Assert.IsTrue(containsItem);
 		}
-	}
+        #endregion
+
+        #region Remove
+        public void Remove_EmptyTreeAndItemNotInTree_ReturnFalse()
+        {
+            // Arrange
+            var tree = new BinarySearchTree<int>();
+
+            // Act
+            bool hasRemovedItem = tree.Remove(TestConstants.Item);
+
+            // Assert
+            Assert.IsFalse(hasRemovedItem);
+        }
+
+        [Test]
+        public void Remove_TreeWithOneNodeAndRemoveItemNotInTree_ReturnFalse()
+        {
+            // Arrange
+            var tree = new BinarySearchTree<int>(TestConstants.Item);
+
+            // Act
+            bool hasRemovedItem = tree.Contains(TestConstants.SmallerItem);
+
+            // Assert
+            Assert.IsFalse(hasRemovedItem);
+        }
+
+        [Test]
+        public void Remove_PerfectTreeAndItemIsLeaf_ReturnTrue()
+        {
+            // Arrange
+            var tree = new BinarySearchTree<int>(TreeTestUtilities.GetRootOfPerfectBinaryTree());
+            var expectedTraversal = new List<int>{ 1, 2, 4, 5, 6, 7 };
+
+            // Act
+            bool hasRemovedItem = tree.Remove(3);
+            var actualTraversal = tree.InOrderTraversal();
+
+            // Assert
+            Assert.IsTrue(hasRemovedItem);
+            Assert.IsTrue(expectedTraversal.SequenceEqual(actualTraversal));
+        }
+
+        [Test]
+        public void Remove_PerfectTreeAndItemInMiddleOfTree_ReturnTrue()
+        {
+            // Arrange
+            var tree = new BinarySearchTree<int>(TreeTestUtilities.GetRootOfPerfectBinaryTree());
+            var expectedTraversal = new List<int> { 1, 3, 4, 5, 6, 7 };
+
+            // Act
+            bool hasRemovedItem = tree.Remove(2);
+            var actualTraversal = tree.InOrderTraversal();
+
+            // Assert
+            Assert.IsTrue(hasRemovedItem);
+            Assert.IsTrue(expectedTraversal.SequenceEqual(actualTraversal));
+        }
+        #endregion
+    }
 }

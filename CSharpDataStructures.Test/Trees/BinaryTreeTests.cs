@@ -1,6 +1,7 @@
 ﻿namespace CSharpDataStructures.Test.Trees
 {
 	using NUnit.Framework;
+	using System.Collections;
 	using System.Collections.Generic;
 	using System.Linq;
 
@@ -314,6 +315,27 @@
 			// Assert
 			Assert.IsTrue(actualTraversal.SequenceEqual(expectedTraversal));
 		}
-		#endregion
-	}
+
+        [Test]
+        public void GetEnumerator_PerfectTreeWithMultipleLevelsWithNonGenericCast_ReturnEqualCollection()
+        {
+            // Arrange
+            var root = TreeTestUtilities.GetRootOfPerfectBinaryTree();
+            var tree = new BinaryTree<int>(root);
+            var expectedTraversal = new List<int>() { 1, 2, 3, 4, 5, 6, 7 };
+            var actualTraversal = new List<int>();
+
+            // Act
+            var enumerator = ((IEnumerable)tree).GetEnumerator();
+
+            while (enumerator.MoveNext())
+            {
+                actualTraversal.Add((int)enumerator.Current);
+            }
+
+            // Assert
+            Assert.IsTrue(actualTraversal.SequenceEqual(expectedTraversal));
+        }
+        #endregion
+    }
 }
